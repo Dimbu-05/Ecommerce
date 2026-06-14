@@ -4,9 +4,7 @@ const products = require('./models/productModel')
 const users = require('./models/userModel')
 const cors = require('cors')
 const bcrypt = require('bcrypt')
-const mail = require('.utils/gmail.js')
-
-
+const mail = require('./utils/gmail')
 
 const app = express();
 const port = 2000;
@@ -84,10 +82,9 @@ app.post('/registration',async(req,res)=>{
         let hashPassword = await bcrypt.hash(password,5);
         await users.create({username,password:hashPassword,email,role});
         res.json({msg:"Registration successful"});
-        await mail(email,username);
+        await mail(email,username,role);
     } catch (error) {
-        console.log(error.message);
-        
+        console.log(error.message);   
     }
 })
 
