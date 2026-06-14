@@ -6,7 +6,7 @@
 }
 .form{
     display: flex;
-    flex-direction: column;
-    gap: 15px; /* Creates the exact spacing between fields */
-    width: 300px; 
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
