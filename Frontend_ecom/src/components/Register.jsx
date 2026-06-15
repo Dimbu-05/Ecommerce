@@ -1,5 +1,21 @@
 import React, { useState } from 'react'
 import './Register.css'
+import {z} from 'zod'
+
+let userschema=z.string().min(6,"username must need min 6characters").max(16,'max limit 16 characters')
+let passwordchema=z.string().min(8,"username must need min 8characters").max(16,'max limit 16 characters')
+let emailschema=z.email().min(3,"min charcters 3")
+let roleschema=z.string().min(1,"username must need min 1characters")
+
+function validate(schema,value){
+  if(!value){
+    return '';
+  }
+  let result = schema.safeParse(value)
+  if(result.success) return ""
+  return result.error.issues[0].message
+}
+
 const Register = () => {
     const [username,SetuserName] = useState('');
     const [email,Setemail] = useState('');

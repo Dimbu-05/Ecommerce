@@ -7,19 +7,21 @@ import Login from './components/Login';
 import Home from './components/Home';
 import Products from './components/Products'
 import {Routes,Route} from 'react-router-dom'
+import { useState } from 'react';
 
 const App = () => {
+  const [searchQuery,setsearchQuery] = useState('')
   return (
   <>
     <section style={{textAlign:'center'}}>
-      <Header/>
+      <Header setsearchQuery={setsearchQuery}/>
     </section>
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/home' element={<Home/>}/>  
-      <Route path='/products' element={<Products/>}/>
+      <Route path='/products' element={<Products searchQuery={searchQuery}/>}/>
       <Route path='/about' element={<About/>}/>
-      <Route path='/registration'element={<Register/>}/>
+      <Route path='/registration'element={<Register/>}/>  
       <Route path='/login' element={<Login/>}/>
     </Routes>
   </>

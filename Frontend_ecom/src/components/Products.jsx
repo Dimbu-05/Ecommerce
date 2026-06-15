@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
 import Card from './Card'
-const Products = () => {
+const Products = ({searchQuery}) => {
     const [products,setProducts] = useState([]);
     async function FetchData() {
         const response = await fetch("http://localhost:8080/products")
         const fetchedData = await response.json();
         setProducts(fetchedData);
     }
+    let filteredproducts = products.filter((p=>{
+        return p.title.toLowerCase().includes(searchQuery.toLowerCase())
+    }))
   return (
     <div>
         <button style={{alignItems:'center'}} onClick={()=>FetchData()}>click me</button>
         <div className="card">
-            { products.map((p) => { return <Card key={p.id} {...p}/> }) }
+            { filteredproducts.map((p) => { return <Card key={p.id} {...p}/> }) }
         </div>
     </div>
   )
