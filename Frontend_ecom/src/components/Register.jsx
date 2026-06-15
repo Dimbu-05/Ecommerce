@@ -42,9 +42,13 @@ const Register = () => {
     <div>
       <form className='register-form' onSubmit={postDetails}>
         <input onChange={(e)=>{SetuserName(e.target.value)}} type="text" placeholder='username'></input><br/>
+        <p>{validate(userschema,username)}</p>
         <input onChange={(e)=>{Setemail(e.target.value)}}type="email" placeholder='email'></input><br/>
+        <p>{validate(passwordchema,password)}</p>
         <input onChange={(e)=>{SetPassword(e.target.value)}}type="password" placeholder='password'></input><br/>
+        <p>{validate(emailschema,email)}</p>
         <input onChange={(e)=>{SetRole(e.target.value)}}type="text" placeholder='role'></input><br/>
+        <p>{validate(roleschema,role)}</p>
         <button 
           style={{backgroundColor:color,color:'white'}}
           onMouseEnter={()=>setColor('green')}

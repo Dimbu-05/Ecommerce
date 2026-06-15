@@ -5,12 +5,18 @@ const users = require('./models/userModel')
 const cors = require('cors')
 const bcrypt = require('bcrypt')
 const mail = require('./utils/gmail')
+const jwt = require('jsonwebtoken')
+let limiter = require('./middlewares/ratelimit')
+let secretKey = 'dummysecret'
 
 const app = express();
-const port = 2000;
+const port = 8080;
 
-//middlewares
+
+
+//middleware
 app.use(cors());
+app.use(limiter)
 app.use(express.json())
 
 
@@ -81,15 +87,44 @@ app.post('/registration',async(req,res)=>{
         }
         let hashPassword = await bcrypt.hash(password,5);
         await users.create({username,password:hashPassword,email,role});
-        res.json({msg:"Registration successful"});
+
+        // generating JsonwebToken
+        // 1-> Payload        2-> Secret key           3-> expiry data
+        let payLoad = {username:username,emailadd:email,role:role}
+        let token = await jwt.sign(payLoad,secretKey,{expiresIn:'1hr'})
+
+
+
+        res.json({msg:"Registration successful",token:token});
         await mail(email,username,role);
     } catch (error) {
         console.log(error.message);   
     }
 })
 
-//mail 
+//login workflow
+app.post('/login',async(req,res,next)=>{
+    try {
+        const {username,password} = req.body;
+        if(!username || !password){
+            return res.json({msg:"missing Fields"})
+        }
+        let checkUser = await users.findOne({username})
+        if(!checkUser) return res.json({msg:"User not found"})
 
+        let checkpass = await bcrypt.compare(password,checkUser.password)
+        if(!checkpass) return res.json({msg:"username or password is wrong"})
+
+        //verify the token
+        let token = req.headers.authorization.split(' ')[1];
+        if(!token) return res.json({msg:"Hii"})
+        let checkToken = await jwt.verify(token,secretKey);
+        if(!checkToken) return res.json({msg:"invalid token"})
+        res.json({msg:"login successful"})
+    } catch (error) {
+        next(error);
+    }
+})
 
 app.listen(port,()=>{
     console.log(`Listening to port:${port}`);
