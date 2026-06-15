@@ -6,6 +6,10 @@
     width: 250px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+    margin-left: 40%;
 }
 
 .register-form input{

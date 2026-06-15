@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import './Register.css'
 
 const Login = () => {
     const [username,setUserName] = useState('');
