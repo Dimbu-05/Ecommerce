@@ -11,7 +11,7 @@ let mail=async(email,username,role)=>{
     })
 
     let message = {
-        from : 'saidimbu1423@gmail.com',
+        from : process.env.SMTP_MAIL,
         to : email,
         subject:"Account is created",
         html:`Hi, ${username} your account has been created successfully and your role is ${role} `
