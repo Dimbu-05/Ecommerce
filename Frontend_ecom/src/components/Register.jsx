@@ -25,7 +25,7 @@ const Register = () => {
 
     let postDetails = async(event)=>{
       event.preventDefault();
-      let response = await fetch('http://localhost:8080/registration',{
+      let response = await fetch('https://ecommerce-tbv7.onrender.com//registration',{
         method:'post',
         headers:{
           "Content-type":"application/json"

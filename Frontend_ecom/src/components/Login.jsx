@@ -8,7 +8,7 @@ const Login = () => {
     let sendDetails = async(event)=>{
         event.preventDefault();
         let jwttoken = localStorage.getItem('token')
-        let response = await fetch('http://localhost:8080/login',{
+        let response = await fetch('https://ecommerce-tbv7.onrender.com/login',{
         method:'post',
         headers:{
           "Content-type":"application/json",

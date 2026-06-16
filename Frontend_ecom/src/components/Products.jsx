@@ -3,7 +3,7 @@ import Card from './Card'
 const Products = ({searchQuery}) => {
     const [products,setProducts] = useState([]);
     async function FetchData() {
-        const response = await fetch("http://localhost:8080/products")
+        const response = await fetch("https://ecommerce-tbv7.onrender.com/products")
         const fetchedData = await response.json();
         setProducts(fetchedData);
     }
